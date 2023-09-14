@@ -19,11 +19,10 @@ const Link: React.FC<React.AnchorHTMLAttributes<any>> = ({
 }
 
 
-
 function Blog({ articles }: any) {
   return (
       <>
-      <h1 style={{fontSize: "32px", textAlign: "center"}}> Builder IO Next JS Blog </h1>
+      <h1 style={{fontSize: "32px", textAlign: "center"}}> Builder IO Next JS Blog Latest </h1>
       <BuilderComponent
               name="page"
               content={articles}
