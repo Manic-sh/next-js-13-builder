@@ -1,7 +1,7 @@
 // pages/[...page].tsx
 import React from "react";
 import { useRouter } from "next/router";
-import { BuilderComponent, builder, useIsPreviewing } from "@builder.io/react";
+import { BuilderComponent, builder, useIsPreviewing, Builder } from "@builder.io/react";
 import { BuilderContent } from "@builder.io/sdk";
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
@@ -10,6 +10,15 @@ import { GetStaticProps } from "next";
 // Replace with your Public API Key
 builder.init("3f2e4166c5a949bb8a361a63d655f7e9");
 
+
+//Builder.register("editor.settings", { hideCommentsTab: true });
+
+const locale = 'es-ES';
+
+const theme = [{
+  'darkMode': true,
+}];
+ //builder.apiVersion = "v1"
 // Define a function that fetches the Builder
 // content for a given page
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -18,12 +27,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     .get("page", {
       options: {
         noTraverse: false,
+        includeUnpublished: true,
+        locale: locale,
       },
       userAttributes: {
         urlPath: "/" + ((params?.page as string[])?.join("/") || ""),
       },
+      
+      locale:locale,
     })
     .toPromise();
+
+    //console.log("🚀 ~ file: [...page].tsx:49 ~ getStaticPaths ~ pages:", page);
 
   // Return the page content as props
   return {
@@ -31,7 +46,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       page: page || null,
     },
     // Revalidate the content every 5 seconds
-    revalidate: 5,
+    revalidate: 60,
   };
 };
 
@@ -42,8 +57,9 @@ export async function getStaticPaths() {
   const pages = await builder.getAll("page", {
     // We only need the URL field
     fields: "data.url",
-    options: { noTargeting: true },
+    options: { noTargeting: true},
   });
+
 
   // Generate the static paths for all pages in Builder
   return {
@@ -65,20 +81,23 @@ export default function Page({ page }: { page: BuilderContent | null }) {
 
   // If the page content is available, render
   // the BuilderComponent with the page content
-  const handleContentLoaded = () => {
-      return "Hello world!!";
-  };
-
-  console.log("🚀 ~ file: [...page].tsx:71 ~ handleContentLoaded ~ handleContentLoaded:", handleContentLoaded);
-
+  // const handleContentLoaded = (content: BuilderContent) => {
+  //     console.log("🚀 ~ file: [...page].tsx:74 ~ handleContentLoaded ~ content:", content);
+  // };
   
   return (
     <>
       <Head>
         <title>{page?.data?.title}</title>
       </Head>
-      {/* Render the Builder page */}
-      <BuilderComponent model="page" content={page || undefined} />
+      {/* Render  twice  Builder contentLoaded */}
+      {/* <BuilderComponent model="page" content={page || undefined} 
+                      contentLoaded={(data, content) => {
+                        handleContentLoaded(content);
+                      }}
+      /> */}
+            <BuilderComponent model="page" locale={locale} content={page || undefined} data={{theme}}/>
+      {/* Workaround for single render */}
     </>
   );
 }
