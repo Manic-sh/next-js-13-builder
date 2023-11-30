@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
 }
 
 // View full integration options and docs here: https://builder.io/c/docs/developers
-export default function MyComponent({props}) {
+export default function MyComponent({props}: any) {
   return <BuilderComponent
     content={props?.content}
     locale={myLocale}
