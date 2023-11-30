@@ -12,7 +12,8 @@ import { Button } from "@twilio-paste/core";
 import Typography from '@mui/material/Typography';
 import '@builder.io/widgets';
 
-export function BasicSelect(props) {
+
+export function BasicSelect(props: any) {
   const [country, setCountry] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -30,7 +31,7 @@ export function BasicSelect(props) {
           label="Country"
           onChange={handleChange}
         >
-          {props.listOptions.map((option) => {
+          {props.listOptions.map((option: any) => {
             <MenuItem value={10}>{option.reviewText}</MenuItem>;
           })}
         </Select>
@@ -65,7 +66,7 @@ Builder.registerComponent(BasicSelect, {
   ],
 });
 
-export const BuilderTextField = (props) => (
+export const BuilderTextField = (props: any) => (
   <TextField variant={props.variant} value={props.textValue}  />
 );
 
@@ -77,7 +78,7 @@ Builder.registerComponent(BuilderTextField, {
   ],
 });
 
-const ButtonTwilioCustom = (props) => {
+const ButtonTwilioCustom = (props: any) => {
   return (
     <span
       {...props.attributes}
@@ -171,6 +172,7 @@ Builder.registerComponent("ButtonTwilio", {
 
 Builder.registerComponent("ImagePicker", {
   name: "Image comp",
+  hideFromInsertMenu: true,
   inputs: [
     {
       name: "reviews",
@@ -207,7 +209,7 @@ Builder.registerComponent("ImagePicker", {
 Builder.registerComponent(BuilderTextField, {
   name: "ExampleCustomComponent",
   friendlyName: "SOME GOOD NAME",
-  hideFromInsertMenu: true,
+  hideFromInsertMenu: false,
   inputs: [
     { name: "title", type: "string", defaultValue: "I am a React component!" },
     {
@@ -218,58 +220,112 @@ Builder.registerComponent(BuilderTextField, {
   ],
 });
 
-Builder.register("insertMenu", {
-  name: "UPDATED COMPONENTS",
-  items: [{ item: "ExampleCustomComponent", name: "THIS IS REALLY NEW!!" }],
-});
+// Builder.register("insertMenu", {
+//   name: "UPDATED COMPONENTS",
+//   items: [{ item: "ExampleCustomComponent", name: "THIS IS REALLY NEW!!" }],
+// });
 
-
-const BuilderTypography = (props) => {
-
+const BuilderTypography = (props: any) => {
   console.log("🚀 ~ file: _app.tsx:229 ~ BuilderTypography ~ props:", props);
 
-
-  return(
-  <Typography {...props} {...props.attributes}  
-    ref={
-      (el: HTMLElement | null) => {
+  return (
+    <Typography
+      {...props}
+      {...props.attributes}
+      ref={(el: HTMLElement | null) => {
         props.attributes &&
-        Object.entries(props.attributes.style).forEach(([attributeName, attributeValue]) => {
-              el?.setAttribute('style', 'background-color:' + attributeValue as string);
-        });
-      }
-    } 
-  />
-  )
+          Object.entries(props.attributes.style).forEach(
+            ([attributeName, attributeValue]) => {
+              el?.setAttribute(
+                "style",
+                ("background-color:" + attributeValue) as string
+              );
+            }
+          );
+      }}
+    />
+  );
 };
 
-
 Builder.registerComponent(withChildren(BuilderTypography), {
-  name: 'TextBoxMUI',
-  hideFromInsertMenu: true,
+  name: "TextBoxMUI",
+  hideFromInsertMenu: false,
   canHaveChildren: true,
   override: true,
   noWrap: true,
   inputs: [
     {
-      name: 'children',
-      type: 'string',
-      friendlyName: 'Text', 
+      name: "children",
+      type: "string",
+      friendlyName: "Text",
     },
     {
-      name: 'level',
-      type: 'string',
-      friendlyName: 'Variant',
+      name: "level",
+      type: "string",
+      friendlyName: "Variant",
       enum: ["H1", "h2", "h3"],
     },
   ],
 });
 
+// Builder.register('insertMenu', {
+//   name: 'Custom Text Components',
+//   items: [
+//     { name: 'TextBoxMUI', hideFromInsertMenu: true, },
+//   ],
+// });
 
+Builder.registerComponent("Navigation", {
+  name: "Navigation",
+  friendlyName: "SOME GOOD NAME",
+  hideFromInsertMenu: true,
+  inputs: [
+    {
+      name: "UploadLogo",
+      type: "file",
+      defaultValue:
+        "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F08ee6173b5b14ac5b5d711461c681e8e",
+    },
+    {
+      name: "NavListing",
+      type: "list",
+      defaultValue: [{ navItems: "hello" }],
+      subFields: [
+        {
+                name: 'navItems',
+                type: 'string',
+                defaultValue: "Home",
+              }
+            ],
+    },
+    {
+      name: "UrlLink",
+      type: "url",
+      defaultValue: "https://google.com",
+    },
+  ],
+});
+
+
+type MyProps = { content: string; link: string }
+
+// Any component in your codebase
+function MyButton(props: MyProps) {
+  return <a href={props.link}>{props.content}</a>
+}
+Builder.registerComponent(MyButton,{
+  name: 'MyButton',
+  inputs: [
+    // 'name' is the name of your prop
+    { name: 'content', type: 'text' },
+    { name: 'link', type: 'url' },
+  ],
+});
 
 Builder.register('insertMenu', {
-  name: 'Custom Text Components',
+  name: 'Custom Menu',
   items: [
-    { name: 'TextBoxMUI', hideFromInsertMenu: true, },
+    { name: 'Navigation' },
+    { name: 'MyButton' },
   ],
 });
