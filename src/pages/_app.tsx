@@ -237,12 +237,12 @@ Builder.registerComponent(withChildren(BuilderTypography), {
   ],
 });
 
-// Builder.register('insertMenu', {
-//   name: 'Custom Text Components',
-//   items: [
-//     { name: 'TextBoxMUI', hideFromInsertMenu: true, },
-//   ],
-// });
+Builder.register('insertMenu', {
+  name: 'Custom Text Components',
+  items: [
+    { name: 'TextBoxMUI', hideFromInsertMenu: true, },
+  ],
+});
 
 Builder.registerComponent("Navigation", {
   name: "Navigation",
