@@ -9,8 +9,6 @@ import { GetStaticProps } from "next";
 
 builder.init("3f2e4166c5a949bb8a361a63d655f7e9");
 
-const locale = ["en-fr", "en-us"];
-
 const products = [
   {
     id: 103,
@@ -48,23 +46,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     .get("page", {
       userAttributes: {
         urlPath: "/" + ((params?.page as string[])?.join("/") || ""),
-        locale: locale,
       },
       
       options: {
         enrich: true,
         includeRefs: true,
-        omit: 'data.blocks'
-        
       },
       enrich: true,
     
     })
     .toPromise();
-
-  console.log("🚀 ~ file: [[...page]].tsx:62 ~ constgetStaticProps:GetStaticProps= ~ page:", page);
-
-
   // Return the page content as props
   return {
     props: {
@@ -111,7 +102,7 @@ const isPreviewing = useIsPreviewing();
         <title>{page?.data?.title}</title>
       </Head>
       {/* Render the Builder page */}
-      <BuilderComponent model="page" locale="en-fr" content={page || undefined} options={{ enrich: true }}  />
+      <BuilderComponent model="page" content={page || undefined} options={{ enrich: true }}  />
     </>
   );
 }
