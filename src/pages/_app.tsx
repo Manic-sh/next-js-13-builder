@@ -97,37 +97,6 @@ Builder.registerComponent(ButtonTwilioCustom, {
   inputs: [{ name: "label", type: "string" }],
 });
 
-// const ButtonTwilio = (props) => {
-//   const ref = React.useRef();
-
-//   return (
-//     <Button
-//       ref={(el: HTMLElement | null) => {
-//         console.log("el", props.attributes);
-//         el?.attributes &&
-//           Object.entries(props?.attributes).forEach(
-//             ([attributeName, attributeValue]) => {
-//               if (attributeName == "builder-id") {
-//                 el?.setAttribute(attributeName, attributeValue as string);
-//               } else if (attributeName === "className") {
-//                 //el?.classList.(attributeValue as string);
-//                 (attributeValue as string)
-//                   ?.split(" ")
-//                   .forEach((classname) =>
-//                     el?.classList.add(classname as string)
-//                   );
-//               }
-//             }
-//           );
-//       }}
-//       variant={props.variant}
-//       size={props.size}
-//     >
-//       {props.children}
-//     </Button>
-//   );
-// };
-
 Builder.registerComponent("ButtonTwilio", {
   name: "Paste Button",
   image: "https://tabler-icons.io/static/tabler-icons/icons-png/rectangle.png",
