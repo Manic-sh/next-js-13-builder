@@ -5,7 +5,7 @@ import DefaultErrorPage from "next/error";
 import Head from "next/head";
 import { BuilderContent } from "@builder.io/sdk";
 import { GetStaticProps } from "next";
-
+import Link from 'next/link';
 
 builder.init("3f2e4166c5a949bb8a361a63d655f7e9");
 
@@ -101,6 +101,22 @@ const isPreviewing = useIsPreviewing();
       <Head>
         <title>{page?.data?.title}</title>
       </Head>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/aboutus">
+                <a>About</a>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
       {/* Render the Builder page */}
       <BuilderComponent model="page" content={page || undefined} options={{ enrich: true }}  />
     </>
