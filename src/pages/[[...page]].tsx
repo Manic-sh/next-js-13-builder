@@ -7,7 +7,7 @@ import { BuilderContent } from "@builder.io/sdk";
 import { GetStaticProps } from "next";
 import Link from 'next/link';
 
-builder.init("3f2e4166c5a949bb8a361a63d655f7e9");
+builder.init("c782aff3c66f48acb425981b997feb10");
 
 const products = [
   {
