@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@builder.io/react": "^3.0.14",
+    "@builder.io/react": "^3.2.2",
     "@builder.io/widgets": "^1.2.24",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
